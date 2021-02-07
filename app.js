@@ -1,21 +1,20 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const createError = require("http-errors");
+const dotenv = require("dotenv");
 
+dotenv.config();
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 mongoose
-  .connect(
-    "mongodb+srv://admin:admin@cluster0.amfwj.mongodb.net/admin?retryWrites=true&w=majority",
-    {
-      useNewUrlParser: true,
-      useCreateIndex: true,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     console.log("Connected to MongoDB");
   })
